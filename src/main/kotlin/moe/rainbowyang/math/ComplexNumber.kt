@@ -16,9 +16,9 @@ data class ComplexNumber(val real: Double, val imag: Double) {
     }
 
     /** 模长 */
-    val modulus: Double = Math.sqrt(real * real + imag * imag)
+    val modulus = lengthOf(real, imag)
     /** 辐角 */
-    val argument: Double = Math.atan2(real, imag)
+    val argument = Math.atan2(real, imag)
 
     /** 倒数 */
     fun reciprocal() = this.conjugate() / (real * real + imag * imag)

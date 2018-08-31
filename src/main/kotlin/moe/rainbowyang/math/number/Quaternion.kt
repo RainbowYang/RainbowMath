@@ -1,4 +1,7 @@
-package moe.rainbowyang.math
+package moe.rainbowyang.math.number
+
+import moe.rainbowyang.math.util.lengthOf
+import moe.rainbowyang.math.util.sumOfSquare
 
 /**
  *  四元数（a+bi+cj+dk）

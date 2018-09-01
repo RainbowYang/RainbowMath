@@ -1,6 +1,5 @@
 package moe.rainbowyang.math.point
 
-import moe.rainbowyang.math.util.asPoint2DPolar
 import java.util.*
 
 /**

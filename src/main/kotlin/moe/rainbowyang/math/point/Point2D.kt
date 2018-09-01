@@ -1,7 +1,5 @@
 package moe.rainbowyang.math.point
 
-import moe.rainbowyang.math.util.*
-
 /**
  * 二维笛卡尔坐标系点
  * @author Rainbow Yang

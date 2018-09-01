@@ -1,6 +1,4 @@
-package moe.rainbowyang.math.util
-
-import moe.rainbowyang.math.point.*
+package moe.rainbowyang.math.point
 
 /*
  * 这里放置所有的点转换为其他点的方法，但其逻辑应写在其对应的类中

@@ -1,4 +1,4 @@
-package moe.rainbowyang.math.util
+package moe.rainbowyang.math
 
 import kotlin.math.*
 

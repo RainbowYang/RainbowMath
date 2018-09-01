@@ -1,6 +1,6 @@
 package moe.rainbowyang.math.number
 
-import moe.rainbowyang.math.util.lengthOf
+import moe.rainbowyang.math.lengthOf
 
 /**
  * 本类表示复数类，并给出相关的计算方式

@@ -1,9 +1,8 @@
 package moe.rainbowyang.math.point
 
-import moe.rainbowyang.math.util.asPoint2DPolar
-import moe.rainbowyang.math.util.checkValues
-import moe.rainbowyang.math.util.lengthOf
-import moe.rainbowyang.math.util.until
+import moe.rainbowyang.math.checkValues
+import moe.rainbowyang.math.lengthOf
+import moe.rainbowyang.math.until
 import java.util.*
 import kotlin.math.max
 

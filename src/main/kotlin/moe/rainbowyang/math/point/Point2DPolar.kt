@@ -27,9 +27,7 @@ data class Point2DPolar(val radius: Double, val angle: Double) : Point {
     override fun equals(other: Any?): Boolean {
         if (super.equals(other)) return true
 
-        other as Point2DPolar
-
-        if (radius != other.radius || (angle % (PI * 2)) == (other.angle % (PI * 2))) return false
+        if (this.asAxes != (other as Point2DPolar).asAxes) return false
 
         return true
     }

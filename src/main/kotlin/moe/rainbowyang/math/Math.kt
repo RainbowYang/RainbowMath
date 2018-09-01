@@ -3,11 +3,11 @@ package moe.rainbowyang.math
 import kotlin.math.*
 
 fun lengthOf(vararg nums: Number) = sqrt(sumOfSquare(*nums))
-fun lengthOf(nums: List<Number>) = sqrt(sumOfSquare(nums))
+fun <N : Number> List<N>.lengthOf() = sqrt(sumOfSquare())
 fun sumOfSquare(vararg nums: Number) = nums.sumByDouble { it.toDouble() * it.toDouble() }
-fun sumOfSquare(nums: List<Number>) = nums.sumByDouble { it.toDouble() * it.toDouble() }
+fun <N : Number> List<N>.sumOfSquare() = sumByDouble { it.toDouble() * it.toDouble() }
 fun checkValues(vararg values: Number) = values.all { !it.toDouble().isNaN() || !it.toDouble().isInfinite() }
-fun checkValues(values: List<Number>) = values.all { !it.toDouble().isNaN() || !it.toDouble().isInfinite() }
+fun <N : Number> List<N>.checkValues() = all { !it.toDouble().isNaN() || !it.toDouble().isInfinite() }
 
 fun until(end: Int) = 0 until end
 

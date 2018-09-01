@@ -2,18 +2,14 @@ package moe.rainbowyang.math.point
 
 import java.util.*
 
+
 /**
  * 任意维的球坐标点
  * 由一个radius和多个angle组成
  *
  * @author Rainbow Yang
  */
-class PointSpherical(val radius: Double, vararg angles: Double) : Point {
-
-    val angles = angles
-
-    operator fun component1() = radius
-    operator fun component2() = angles
+data class PointSpherical(val radius: Double, val angles: List<Double>) : Point {
 
     companion object {
         operator fun invoke(cp: Point): PointSpherical {
@@ -30,7 +26,7 @@ class PointSpherical(val radius: Double, vararg angles: Double) : Point {
                 angles.add(angle)
             }
 
-            return PointSpherical(radius, *angles.toDoubleArray())
+            return PointSpherical(radius, angles.toList())
 
         }
     }
@@ -53,7 +49,7 @@ class PointSpherical(val radius: Double, vararg angles: Double) : Point {
     }
 
     override fun toString(): String {
-        return "PointSpherical(radius=$radius, angles=${Arrays.toString(angles)})"
+        return "PointSpherical(radius=$radius, angles=${Arrays.toString(angles.toDoubleArray())})"
     }
 
 

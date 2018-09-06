@@ -1,6 +1,6 @@
 package moe.rainbowyang.math.point
 
-import moe.rainbowyang.math.Line
+import moe.rainbowyang.math.line.Line
 
 /**
  * 二维双角坐标点

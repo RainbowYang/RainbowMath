@@ -41,5 +41,8 @@ data class Quaternion(val a: Double, val b: Double, val c: Double, val d: Double
     operator fun div(other: Number) = this * (1 / other.toDouble())
     operator fun div(other: Quaternion) = this * other.reciprocal()
 
-    override fun toString() = "$a + $b i + $c j + $d k"
+    override fun toString() = "$a" +
+            "${if (b >= 0) "+" else ""}${b}i" +
+            "${if (c >= 0) "+" else ""}${c}j" +
+            "${if (d >= 0) "+" else ""}${d}k"
 }

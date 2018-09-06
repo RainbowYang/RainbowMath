@@ -1,6 +1,8 @@
-package moe.rainbowyang.math
+package moe.rainbowyang.math.line
 
+import moe.rainbowyang.math.almostEquals
 import moe.rainbowyang.math.point.Point2D
+import kotlin.math.atan
 
 /**
  * 数学意义上的线
@@ -14,7 +16,7 @@ class Line(val a: Double, val b: Double, val c: Double) {
     /** 斜率 */
     val slope = -a / b
     /** 倾斜角 */
-    val tiltAngle = Math.atan(slope)
+    val angle = atan(slope)
 
     constructor(a: Number, b: Number, c: Number) : this(a.toDouble(), b.toDouble(), c.toDouble())
 

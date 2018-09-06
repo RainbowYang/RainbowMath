@@ -1,6 +1,8 @@
 package moe.rainbowyang.math.number
 
 import moe.rainbowyang.math.lengthOf
+import kotlin.math.abs
+import kotlin.math.atan2
 
 /**
  * 本类表示复数类，并给出相关的计算方式
@@ -20,7 +22,7 @@ data class ComplexNumber(val real: Double, val imag: Double) {
     /** 模长 */
     val modulus = lengthOf(real, imag)
     /** 辐角 */
-    val argument = Math.atan2(real, imag)
+    val argument = atan2(real, imag)
 
     /** 倒数 */
     fun reciprocal() = this.conjugate() / (real * real + imag * imag)
@@ -45,5 +47,6 @@ data class ComplexNumber(val real: Double, val imag: Double) {
     operator fun div(other: Number) = this * (1 / other.toDouble())
     operator fun div(other: ComplexNumber) = this * other.reciprocal()
 
-    override fun toString() = "$real+${imag}i"
+    override fun toString() = "$real" +
+            "${if (imag >= 0) "+" else ""}${imag}i"
 }

@@ -43,4 +43,3 @@ fun tan(cNum: ComplexNumber) = sin(cNum) / cos(cNum)
 
 private fun sini(num: Double) = 0 withI (exp(num) - exp(-num)) / 2
 private fun cosi(num: Double) = (exp(num) + exp(-num)) / 2
-

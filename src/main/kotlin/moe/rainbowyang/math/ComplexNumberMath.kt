@@ -1,5 +1,6 @@
-package moe.rainbowyang.math.number
+package moe.rainbowyang.math
 
+import moe.rainbowyang.math.number.ComplexNumber
 import kotlin.math.*
 import kotlin.math.ln as ktLn
 

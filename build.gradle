@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'moe.rainbowyang'
-version 'V1.0.0'
+version 'V1.0.1'
 
 repositories {
     mavenCentral()

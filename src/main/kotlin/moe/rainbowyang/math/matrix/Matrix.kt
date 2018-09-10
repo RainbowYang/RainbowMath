@@ -22,15 +22,26 @@ class Matrix(val values: List<List<Number>>) {
     /** 转置 */
     fun transposition() = Matrix(List(column) { List(row) { i -> this[i][it] } })
 
-    operator fun plus(other: Matrix) = Matrix(List(row) { this[it] + other[it] })
+    operator fun plus(other: Matrix) =
+            if (hasSameSizeWith(other))
+                Matrix(List(row) { this[it] + other[it] })
+            else
+                throw IllegalArgumentException("Plus function is not allowed between the two matrices that have different size.")
+
     operator fun times(times: Number) = Matrix(List(row) { this[it] * times })
 
     operator fun times(other: Matrix) =
-            Matrix(List(row) { i ->
-                List(other.column) { j ->
-                    List(column) { this[i][it] * other[it][j] }.sumByDouble { it }
-                }
-            })
+            if (column==other.row)
+                Matrix(List(row) { i ->
+                    List(other.column) { j ->
+                        List(column) { this[i][it] * other[it][j] }.sumByDouble { it }
+                    }
+                })
+            else
+                throw IllegalArgumentException("Times function is not allowed between the two matrices that have worry size.")
+
+
+    private infix fun hasSameSizeWith(other: Matrix)=row == other.row && column == other.column
 
     private operator fun List<Number>.plus(other: List<Number>) =
             List(size) { this[it] + other[it] }
@@ -39,7 +50,7 @@ class Matrix(val values: List<List<Number>>) {
             List(size) { this[it] * times }
 
     override fun toString() = StringBuilder().apply {
-        values.forEach { append(Arrays.toString(it.toTypedArray())).append("\n") }
+        values.forEach { it.forEach { append("$it\t") };append("\n") }
     }.toString()
 
 }

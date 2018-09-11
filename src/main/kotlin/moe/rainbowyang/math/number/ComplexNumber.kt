@@ -1,7 +1,7 @@
 package moe.rainbowyang.math.number
 
 import moe.rainbowyang.math.lengthOf
-import kotlin.math.abs
+import kotlin.Number
 import kotlin.math.atan2
 
 /**

@@ -2,6 +2,7 @@ package moe.rainbowyang.math.number
 
 import moe.rainbowyang.math.lengthOf
 import moe.rainbowyang.math.sumOfSquare
+import kotlin.Number
 
 /**
  *  四元数（a+bi+cj+dk）

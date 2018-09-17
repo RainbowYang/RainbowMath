@@ -1,5 +1,6 @@
 package moe.rainbowyang.math.number
 
+import moe.rainbowyang.math.sumOfSquare
 import kotlin.math.*
 
 /**
@@ -23,13 +24,20 @@ class RealNumber(val value: Double) : Number<RealNumber>, Comparable<RealNumber>
     override fun toString() = "Re-($value)"
 }
 
-object RealNumbeMath : NumberMath<RealNumber> {
-    override val ZERO = RealNumber.ZERO
+object RealNumberMath {
+    val ZERO = RealNumber.ZERO
 
-    override fun sin(num: RealNumber) = RealNumber(sin(num.value))
-    override fun cos(num: RealNumber) = RealNumber(cos(num.value))
+    fun sin(num: RealNumber) = RealNumber(sin(num.value))
+    fun cos(num: RealNumber) = RealNumber(cos(num.value))
+    fun tan(num: RealNumber) = sin(num) / cos(num)
 
-    override fun sqrt(num: RealNumber) = RealNumber(sqrt(num.value))
+    fun sqrt(num: RealNumber) = RealNumber(sqrt(num.value))
 
     fun atan2(y: RealNumber, x: RealNumber) = RealNumber(atan2(y.value, x.value))
+
+    fun lengthOf(vararg nums: RealNumber) = nums.asList().lengthOf()
+    fun List<RealNumber>.lengthOf() = sqrt(sumOfSquare())
+    fun sumOfSquare(vararg nums: RealNumber) = nums.asList().sumOfSquare()
+    fun List<RealNumber>.sumOfSquare() =
+            fold(ZERO) { sum, next -> sum + next * next }
 }

@@ -1,6 +1,10 @@
 package moe.rainbowyang.math.number
 
-import moe.rainbowyang.math.number.RealNumbeMath.*
+import moe.rainbowyang.math.number.RealNumberMath.ZERO
+import moe.rainbowyang.math.number.RealNumberMath.atan2
+import moe.rainbowyang.math.number.RealNumberMath.cos
+import moe.rainbowyang.math.number.RealNumberMath.lengthOf
+import moe.rainbowyang.math.number.RealNumberMath.sin
 
 /**
  * 复数

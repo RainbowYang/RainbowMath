@@ -8,7 +8,6 @@ interface Operation<This> {
     fun Number.asThis(): This
 }
 
-interface OperationForOther<This, Other> : Operation<This> {
-    fun Other.asThis(): This
-}
-
+//interface OperationForOther<This, Other> : Operation<This> {
+//    fun Other.asThis(): This
+//}

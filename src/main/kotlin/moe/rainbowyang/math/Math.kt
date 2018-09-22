@@ -13,6 +13,7 @@ operator fun Number.plus(other: Number) = this.toDouble() + other.toDouble()
 operator fun Number.minus(other: Number) = this.toDouble() - other.toDouble()
 operator fun Number.times(other: Number) = this.toDouble() * other.toDouble()
 operator fun Number.div(other: Number) = this.toDouble() / other.toDouble()
+operator fun Number.unaryMinus() = this.toDouble().unaryMinus()
 
 fun until(end: Int) = 0 until end
 

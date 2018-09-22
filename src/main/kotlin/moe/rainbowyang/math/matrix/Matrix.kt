@@ -1,8 +1,7 @@
 package moe.rainbowyang.math.matrix
 
-import moe.rainbowyang.math.plus
-import moe.rainbowyang.math.times
-import java.util.*
+import moe.rainbowyang.math.*
+import moe.rainbowyang.math.operation.HyperOperation
 
 /**
  * 本类表示矩阵
@@ -11,8 +10,12 @@ import java.util.*
  *
  * @author Rainbow Yang
  */
-class Matrix(val values: List<List<Number>>) {
+class Matrix(val values: List<List<Number>>) : HyperOperation<Matrix> {
     constructor(vararg inits: List<Number>) : this(inits.asList())
+    constructor(row: Int, column: Int, maker: (Int, Int) -> Number) :
+            this(List(row) { r -> List(column) { c -> maker(r, c) } })
+
+    private fun Matrix(maker: (Int, Int) -> Number) = Matrix(row, column, maker)
 
     val row = values.size
     val column = values.first().size
@@ -20,37 +23,32 @@ class Matrix(val values: List<List<Number>>) {
     operator fun get(index: Int) = values[index]
 
     /** 转置 */
-    fun transposition() = Matrix(List(column) { List(row) { i -> this[i][it] } })
+    fun transposition() = Matrix(column, row) { r, c -> this[c][r] }
 
-    operator fun plus(other: Matrix) =
-            if (hasSameSizeWith(other))
-                Matrix(List(row) { this[it] + other[it] })
-            else
-                throw IllegalArgumentException("Plus function is not allowed between the two matrices that have different size.")
+    override operator fun plus(other: Matrix): Matrix {
+        check(row == other.row && column == other.column) { "plus is not allowed here" }
+        return Matrix { r, c -> this[r][c] + other[r][c] }
+    }
 
-    operator fun times(times: Number) = Matrix(List(row) { this[it] * times })
+    override fun unaryMinus() = Matrix { r, c -> -this[r][c] }
+    override fun Number.asThis(): Matrix = Matrix { _, _ -> this }
 
-    operator fun times(other: Matrix) =
-            if (column==other.row)
-                Matrix(List(row) { i ->
-                    List(other.column) { j ->
-                        List(column) { this[i][it] * other[it][j] }.sumByDouble { it }
-                    }
-                })
-            else
-                throw IllegalArgumentException("Times function is not allowed between the two matrices that have worry size.")
+    override operator fun times(times: Number) = Matrix { r, c -> this[r][c] * times }
+    override operator fun div(div: Number) = Matrix { r, c -> this[r][c] / div }
 
+    override operator fun times(other: Matrix): Matrix {
+        check(column == other.row) { "times is not allowed here" }
+        return Matrix(row, other.column) { r, c ->
+            List(column) { this[r][it] * other[it][c] }.sumByDouble { it }
+        }
+    }
 
-    private infix fun hasSameSizeWith(other: Matrix)=row == other.row && column == other.column
-
-    private operator fun List<Number>.plus(other: List<Number>) =
-            List(size) { this[it] + other[it] }
-
-    private operator fun List<Number>.times(times: Number) =
-            List(size) { this[it] * times }
+    override fun reciprocal(): Matrix {
+        check(row == column) { "reciprocal is not allowed here" }
+        TODO("not implemented")
+    }
 
     override fun toString() = StringBuilder().apply {
-        values.forEach { it.forEach { append("$it\t") };append("\n") }
+        values.forEach { it.forEach { append("$it\t") }; append("\n") }
     }.toString()
-
 }

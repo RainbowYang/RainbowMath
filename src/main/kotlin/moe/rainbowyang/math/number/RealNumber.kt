@@ -2,11 +2,9 @@ package moe.rainbowyang.math.number
 
 
 import moe.rainbowyang.math.operation.HyperOperation
+import moe.rainbowyang.math.operation.LogAndExp
 import moe.rainbowyang.math.operation.TrigonometricFunctions
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * 实数，以[Double]为底层
@@ -16,7 +14,8 @@ class RealNumber(val value: Double) :
         Number<RealNumber>,
         Comparable<RealNumber>,
         HyperOperation<RealNumber>,
-        TrigonometricFunctions<RealNumber> {
+        TrigonometricFunctions<RealNumber>,
+        LogAndExp<RealNumber> {
     constructor(value: kotlin.Number) : this(value.toDouble())
 
     companion object {
@@ -32,6 +31,9 @@ class RealNumber(val value: Double) :
 
     override fun sin() = RealNumber(sin(value))
     override fun cos() = RealNumber(cos(value))
+
+    override fun exp() = RealNumber(exp(value))
+    override fun ln() = RealNumber(ln(value))
 
     override operator fun compareTo(other: RealNumber) = value.compareTo(other.value)
 

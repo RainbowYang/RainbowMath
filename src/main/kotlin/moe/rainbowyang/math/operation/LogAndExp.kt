@@ -1,16 +1,22 @@
 package moe.rainbowyang.math.operation
 
-/**
- * @author Rainbow Yang
- */
-interface ExpAndLog<This : ExpAndLog<This, Out>, Out : HyperOperation2<Out>> : Operation<This> {
-    fun pow(other: This): Out = exp(this.ln() * other.asOut())
+interface LogAndExp<This> : Operation<This>
+        where This : LogAndExp<This>,
+              This : HyperOperation2<This> {
 
-    fun exp(): Out
+    interface Math<This>
+            where This : LogAndExp<This>,
+                  This : HyperOperation2<This> {
+        fun power(base: This, num: This) = base.power(num)
+        fun exp(num: This) = num.exp()
 
-    fun exp(out: Out): Out
-    fun asOut(): Out
+        fun log(base: This, num: This) = base.log(num)
+        fun ln(num: This) = num.ln()
+    }
 
-    fun log(other: This): Out = other.ln() / this.ln()
-    fun ln(): Out
+    fun power(other: This): This = (this.ln() * other).exp()
+    fun exp(): This
+
+    fun log(other: This): This = other.ln() / this.ln()
+    fun ln(): This
 }

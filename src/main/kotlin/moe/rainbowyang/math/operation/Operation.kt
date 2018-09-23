@@ -6,8 +6,8 @@ package moe.rainbowyang.math.operation
  */
 interface Operation<This> {
     fun Number.asThis(): This
-}
 
-//interface OperationForOther<This, Other> : Operation<This> {
-//    fun Other.asThis(): This
-//}
+    interface WithOther<This, Other> : Operation<This> {
+        fun Other.asThis(): This
+    }
+}

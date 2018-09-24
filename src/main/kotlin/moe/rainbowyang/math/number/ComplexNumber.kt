@@ -1,52 +1,117 @@
 package moe.rainbowyang.math.number
 
-import moe.rainbowyang.math.lengthOf
-import kotlin.Number
-import kotlin.math.atan2
+import moe.rainbowyang.math.number.RealNumber.Math.asThis
+import moe.rainbowyang.math.number.RealNumber.Math.atan2
+import moe.rainbowyang.math.number.RealNumber.Math.cos
+import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
+import moe.rainbowyang.math.number.RealNumber.Math.ln
+import moe.rainbowyang.math.number.RealNumber.Math.sin
+import moe.rainbowyang.math.number.RealNumber.Math.exp
+import moe.rainbowyang.math.operation.HyperOperation
+import moe.rainbowyang.math.operation.LogAndExp
+import moe.rainbowyang.math.operation.TrigonometricFunctions
+import moe.rainbowyang.math.number.ComplexNumber.Normal.Companion.withI
+import moe.rainbowyang.math.number.ComplexNumber.Math.plus
+import moe.rainbowyang.math.number.ComplexNumber.Math.minus
+import moe.rainbowyang.math.number.ComplexNumber.Math.times
 
 /**
- * 本类表示复数类，并给出相关的计算方式
- *
- * 原有的[Number]将被视为实数，所以此类不继承[Number]
- *
+ * 复数
  * @author Rainbow Yang
  */
-
-data class ComplexNumber(val real: Double, val imag: Double) {
-    constructor(real: Number, imaginary: Number) : this(real.toDouble(), imaginary.toDouble())
+abstract class ComplexNumber :
+        Number<ComplexNumber>,
+        HyperOperation.WithOther<ComplexNumber, RealNumber>,
+        TrigonometricFunctions<ComplexNumber>,
+        LogAndExp.WithOther<ComplexNumber, RealNumber> {
 
     companion object {
-        infix fun Number.withI(i: Number) = ComplexNumber(this, i)
+        val ZERO: ComplexNumber = 0 withI 0
     }
 
-    /** 模长 */
-    val modulus = lengthOf(real, imag)
-    /** 辐角 */
-    val argument = atan2(real, imag)
+    open val real: RealNumber get() = asNormal().real
+    open val imag: RealNumber get() = asNormal().imag
+    open val modulus: RealNumber get() = asExp().modulus
+    open val argument: RealNumber get() = asExp().argument
 
-    /** 倒数 */
-    fun reciprocal() = this.conjugate() / (real * real + imag * imag)
+    abstract fun asNormal(): Normal
+    abstract fun asExp(): AsExp
 
-    /** 共轭 */
-    fun conjugate() = real withI -imag
+    abstract fun conjugate(): ComplexNumber
 
-    operator fun plus(other: Number) = (real + other.toDouble()) withI imag
-    operator fun plus(other: ComplexNumber) = (real + other.real) withI (imag + other.imag)
+    /**
+     * 复数表示为a+bi
+     */
+    class Normal(override val real: RealNumber, override val imag: RealNumber) : ComplexNumber() {
+        companion object {
+            infix fun RealNumber.withI(imag: RealNumber) = Normal(this, imag)
+            infix fun kotlin.Number.withI(imag: kotlin.Number) = this.asThis() withI RealNumber(imag)
+            infix fun kotlin.Number.withI(imag: RealNumber) = this.asThis() withI imag
+            infix fun RealNumber.withI(imag: kotlin.Number) = this withI imag.asThis()
+        }
 
-    operator fun minus(other: Number) = this + (-other.toDouble())
-    operator fun minus(other: ComplexNumber) = this + (-other)
-    operator fun unaryMinus() = -real withI -imag
+        override fun asNormal() = this
+        override fun asExp() = AsExp(lengthOf(real, imag), atan2(real, imag))
 
-    operator fun times(other: Number) = real * other.toDouble() withI imag * other.toDouble()
-    operator fun times(other: ComplexNumber): ComplexNumber {
-        val (a1, b1) = this
-        val (a2, b2) = other
-        return (a1 * a2 - b1 * b2) withI (a1 * b2 + a2 * b1)
+        override fun kotlin.Number.asThis(): ComplexNumber = this withI 0
+        override fun RealNumber.asThis(): ComplexNumber = this withI 0
+
+        override fun plus(other: ComplexNumber) = real + other.real withI imag + other.imag
+        override fun times(other: ComplexNumber) = asExp() * other
+
+        override fun unaryMinus() = -real withI -imag
+        override fun reciprocal() = asExp().reciprocal()
+
+        override fun conjugate(): ComplexNumber = real withI -imag
+
+        override fun exp(): ComplexNumber = exp(real) * cis(imag)
+        override fun ln(): ComplexNumber = ln(modulus) withI argument
+
+        override fun sin(): ComplexNumber = sin(real) * cosI(imag) + sinI(imag) * cos(real)
+        override fun cos(): ComplexNumber = cos(real) * cosI(imag) - sinI(imag) * sin(real)
+
+        private fun cis(num: RealNumber) = cos(num) withI sin(num)
+        private fun sinI(num: RealNumber) = 0 withI (exp(num) - exp(-num)) / 2
+        private fun cosI(num: RealNumber) = (exp(num) + exp(-num)) / 2
+
+        override fun toString() = "$real ${if (imag >= RealNumber.ZERO) "+" else ""} ${imag}i"
     }
 
-    operator fun div(other: Number) = this * (1 / other.toDouble())
-    operator fun div(other: ComplexNumber) = this * other.reciprocal()
+    class AsExp(override val modulus: RealNumber, override val argument: RealNumber) : ComplexNumber() {
+        companion object {
+            infix fun RealNumber.expI(argument: RealNumber) = AsExp(this, argument)
+            infix fun kotlin.Number.expI(argument: kotlin.Number) = asThis() expI argument.asThis()
+            infix fun kotlin.Number.expI(argument: RealNumber) = asThis() expI argument
+            infix fun RealNumber.expI(argument: kotlin.Number) = this expI argument.asThis()
+        }
 
-    override fun toString() = "$real" +
-            "${if (imag >= 0) "+" else ""}${imag}i"
+        override fun asNormal() = Normal(modulus * cos(argument), modulus * sin(argument))
+        override fun asExp() = this
+
+        override fun kotlin.Number.asThis(): ComplexNumber = this expI 0
+        override fun RealNumber.asThis(): ComplexNumber = this expI 0
+
+        override fun plus(other: ComplexNumber) = this.asNormal() + other
+        override fun times(other: ComplexNumber) = modulus * other.modulus expI argument + other.argument
+
+        override fun unaryMinus() = asNormal().unaryMinus()
+        override fun reciprocal() = modulus.reciprocal() expI -argument
+
+        override fun conjugate(): ComplexNumber = modulus expI -argument
+
+        override fun exp(): ComplexNumber = asExp().exp()
+        override fun ln(): ComplexNumber = asExp().ln()
+
+        override fun sin(): ComplexNumber = asExp().sin()
+        override fun cos(): ComplexNumber = asExp().cos()
+
+        override fun toString() = "$modulus * exp($argument)"
+    }
+
+    object Math : HyperOperation.WithOther.Math<ComplexNumber, RealNumber>,
+            TrigonometricFunctions.Math<ComplexNumber>,
+            LogAndExp.WithOther.Math<ComplexNumber, RealNumber> {
+        override val ZERO: ComplexNumber
+            get() = ComplexNumber.ZERO
+    }
 }

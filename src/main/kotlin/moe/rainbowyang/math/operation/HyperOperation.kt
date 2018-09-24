@@ -6,6 +6,8 @@ package moe.rainbowyang.math.operation
  */
 interface HyperOperation<This> : HyperOperation1<This>, HyperOperation2<This> {
     interface Math<This : HyperOperation<This>> : HyperOperation1.Math<This>, HyperOperation2.Math<This>
+    interface WithOther<This : HyperOperation.WithOther<This, Other>, Other> :
+            HyperOperation1.WithOther<This, Other>, HyperOperation2.WithOther<This, Other>
 }
 
 interface HyperOperation1<This> : Operation<This> {

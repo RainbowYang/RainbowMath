@@ -40,6 +40,9 @@ class RealNumber(val value: Double) :
     override fun toString() = value.toString()
 
     object Math : HyperOperation.Math<RealNumber>, TrigonometricFunctions.Math<RealNumber> {
+        override val ZERO: RealNumber
+            get() = RealNumber.ZERO
+
         fun sqrt(num: RealNumber) = RealNumber(sqrt(num.value))
 
         fun atan2(y: RealNumber, x: RealNumber) = RealNumber(atan2(y.value, x.value))

@@ -10,4 +10,12 @@ interface Operation<This> {
     interface WithOther<This, Other> : Operation<This> {
         fun Other.asThis(): This
     }
+
+    /**
+     * 此接口用于扩展
+     * 须由单例实现，提供静态方法
+     */
+    interface Math<This> {
+        val ZERO: This
+    }
 }

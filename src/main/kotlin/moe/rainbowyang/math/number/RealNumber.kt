@@ -20,6 +20,7 @@ class RealNumber(val value: Double) :
 
     companion object {
         val ZERO = RealNumber(0)
+        fun kotlin.Number.asRealNumber() = RealNumber(this)
     }
 
     override fun kotlin.Number.asThis() = RealNumber(this)
@@ -39,7 +40,9 @@ class RealNumber(val value: Double) :
 
     override fun toString() = value.toString()
 
-    object Math : HyperOperation.Math<RealNumber>, TrigonometricFunctions.Math<RealNumber> {
+    object Math : HyperOperation.Math<RealNumber>,
+            TrigonometricFunctions.Math<RealNumber>,
+            LogAndExp.Math<RealNumber> {
         override val ZERO: RealNumber
             get() = RealNumber.ZERO
 
@@ -52,7 +55,6 @@ class RealNumber(val value: Double) :
         fun sumOfSquare(vararg nums: RealNumber) = nums.asList().sumOfSquare()
         fun List<RealNumber>.sumOfSquare() =
                 fold(ZERO) { sum, next -> sum + next * next }
-
     }
 }
 

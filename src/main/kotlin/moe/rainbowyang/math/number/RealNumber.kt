@@ -11,7 +11,7 @@ import kotlin.math.*
  * @author Rainbow Yang
  */
 class RealNumber(val value: Double) :
-        Number<RealNumber>,
+        Number,
         Comparable<RealNumber>,
         HyperOperation<RealNumber>,
         TrigonometricFunctions<RealNumber>,

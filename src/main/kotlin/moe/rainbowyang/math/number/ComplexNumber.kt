@@ -20,7 +20,7 @@ import moe.rainbowyang.math.number.ComplexNumber.Math.times
  * @author Rainbow Yang
  */
 abstract class ComplexNumber :
-        Number<ComplexNumber>,
+        Number,
         HyperOperation.WithOther<ComplexNumber, RealNumber>,
         TrigonometricFunctions<ComplexNumber>,
         LogAndExp.WithOther<ComplexNumber, RealNumber> {

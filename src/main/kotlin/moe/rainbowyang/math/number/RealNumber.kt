@@ -7,7 +7,7 @@ import moe.rainbowyang.math.operation.TrigonometricFunctions
 import kotlin.math.*
 
 /**
- * 实数，以[Double]为底层
+ * 实数
  * @author Rainbow Yang
  */
 class RealNumber(val value: Double) :
@@ -20,10 +20,7 @@ class RealNumber(val value: Double) :
 
     companion object {
         val ZERO = RealNumber(0)
-        fun kotlin.Number.asRealNumber() = RealNumber(this)
     }
-
-    override fun kotlin.Number.asThis() = RealNumber(this)
 
     override fun plus(other: RealNumber) = RealNumber(this.value + other.value)
     override fun times(other: RealNumber) = RealNumber(this.value * other.value)
@@ -40,11 +37,9 @@ class RealNumber(val value: Double) :
 
     override fun toString() = value.toString()
 
-    object Math : HyperOperation.Math<RealNumber>,
-            TrigonometricFunctions.Math<RealNumber>,
-            LogAndExp.Math<RealNumber> {
-        override val ZERO: RealNumber
-            get() = RealNumber.ZERO
+    object Math : TrigonometricFunctions.Math<RealNumber>, LogAndExp.Math<RealNumber> {
+
+        fun kotlin.Number.asReal() = RealNumber(this)
 
         fun sqrt(num: RealNumber) = RealNumber(sqrt(num.value))
 

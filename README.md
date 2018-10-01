@@ -34,10 +34,13 @@ But as the name says, it may be a Math Library with anything about math.
   - [x] 共轭(Conjugation)
   
 - [x] 四元数 Quaternion
-  - [x] 加(Addition), 减(Subtraction), 乘(Multiplication), 除(Division)
+  - [x] 运算 Operation
+      - [x] 超1,2-运算 1,2-ation
+      - [ ] 对数与指数 Logarithm and exponentiation
+      - [ ] 三角函数 TrigonometricFunction
   - [x] 模长(Modulus)
   - [ ] 辐角(Argument)
-  - [x] 乘逆(Reciprocal), 共轭(Conjugation)
+  - [x] 共轭(Conjugation)
   - [ ] 矩阵表示
   - [ ] 点积(Dot product), 叉积(Cross product)
   - [ ] 外积

@@ -31,10 +31,9 @@ class Matrix(val values: List<List<Number>>) : HyperOperation<Matrix> {
     }
 
     override fun unaryMinus() = Matrix { r, c -> -this[r][c] }
-    override fun Number.asThis(): Matrix = Matrix { _, _ -> this }
 
-    override operator fun times(times: Number) = Matrix { r, c -> this[r][c] * times }
-    override operator fun div(div: Number) = Matrix { r, c -> this[r][c] / div }
+    operator fun times(times: Number) = Matrix { r, c -> this[r][c] * times }
+    operator fun div(div: Number) = Matrix { r, c -> this[r][c] / div }
 
     override operator fun times(other: Matrix): Matrix {
         check(column == other.row) { "times is not allowed here" }

@@ -1,5 +1,6 @@
 package moe.rainbowyang.math.number
 
+import moe.rainbowyang.math.matrix.Matrix
 import moe.rainbowyang.math.number.ComplexNumber.Math.asComplex
 import moe.rainbowyang.math.number.ComplexNumber.Normal.Companion.withI
 import moe.rainbowyang.math.number.RealNumber.Math.asReal
@@ -39,6 +40,8 @@ abstract class ComplexNumber :
 
     abstract fun conjugate(): ComplexNumber
 
+    abstract fun asMatrix(): Matrix
+
     /**
      * 复数表示为a+bi
      */
@@ -46,6 +49,8 @@ abstract class ComplexNumber :
         companion object {
             infix fun RealNumber.withI(imag: RealNumber) = Normal(this, imag)
         }
+
+        override fun asMatrix() = Matrix(listOf(real, -imag), listOf(imag, real))
 
         override fun asNormal() = this
         override fun asExp() = AsExp(lengthOf(real, imag), atan2(real, imag))
@@ -78,6 +83,8 @@ abstract class ComplexNumber :
         companion object {
             infix fun RealNumber.expI(argument: RealNumber) = AsExp(this, argument)
         }
+
+        override fun asMatrix() = asNormal().asMatrix()
 
         override fun asNormal() = Normal(modulus * cos(argument), modulus * sin(argument))
         override fun asExp() = this

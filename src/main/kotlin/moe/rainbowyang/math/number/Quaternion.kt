@@ -1,5 +1,6 @@
 package moe.rainbowyang.math.number
 
+import moe.rainbowyang.math.matrix.Matrix
 import moe.rainbowyang.math.number.Quaternion.Math.arg
 import moe.rainbowyang.math.number.Quaternion.Math.asQuaternion
 import moe.rainbowyang.math.number.Quaternion.Math.sgn
@@ -32,6 +33,9 @@ data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, v
     val modulus = lengthOf(a, b, c, d)
     val scalar = a
     val vecter = Quaternion(RealNumber.ZERO, b, c, d)
+
+    fun asMatrix() = Matrix(listOf(a, d, -c, b),
+            listOf(-d, a, -b, -c), listOf(c, b, a, -d), listOf(-b, c, d, a))
 
     override operator fun plus(other: Quaternion) =
             Quaternion(a + other.a, b + other.b, c + other.c, d + other.d)

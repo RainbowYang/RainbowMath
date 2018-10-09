@@ -1,6 +1,7 @@
 package moe.rainbowyang.math.matrix
 
-import moe.rainbowyang.math.*
+import moe.rainbowyang.math.number.RealNumber
+import moe.rainbowyang.math.number.RealNumber.Math.asReal
 import moe.rainbowyang.math.operation.HyperOperation
 
 /**
@@ -10,12 +11,12 @@ import moe.rainbowyang.math.operation.HyperOperation
  *
  * @author Rainbow Yang
  */
-class Matrix(val values: List<List<Number>>) : HyperOperation<Matrix> {
-    constructor(vararg inits: List<Number>) : this(inits.asList())
-    constructor(row: Int, column: Int, maker: (Int, Int) -> Number) :
+class Matrix(val values: List<List<RealNumber>>) : HyperOperation<Matrix> {
+    constructor(vararg inits: List<RealNumber>) : this(inits.asList())
+    constructor(row: Int, column: Int, maker: (Int, Int) -> RealNumber) :
             this(List(row) { r -> List(column) { c -> maker(r, c) } })
 
-    private fun Matrix(maker: (Int, Int) -> Number) = Matrix(row, column, maker)
+    private fun Matrix(maker: (Int, Int) -> RealNumber) = Matrix(row, column, maker)
 
     val row = values.size
     val column = values.first().size
@@ -32,13 +33,13 @@ class Matrix(val values: List<List<Number>>) : HyperOperation<Matrix> {
 
     override fun unaryMinus() = Matrix { r, c -> -this[r][c] }
 
-    operator fun times(times: Number) = Matrix { r, c -> this[r][c] * times }
-    operator fun div(div: Number) = Matrix { r, c -> this[r][c] / div }
+    operator fun times(times: RealNumber) = Matrix { r, c -> this[r][c] * times }
+    operator fun div(div: RealNumber) = Matrix { r, c -> this[r][c] / div }
 
     override operator fun times(other: Matrix): Matrix {
         check(column == other.row) { "times is not allowed here" }
         return Matrix(row, other.column) { r, c ->
-            List(column) { this[r][it] * other[it][c] }.sumByDouble { it }
+            (List(column) { this[r][it] * other[it][c] }.sumByDouble { it.value }).asReal()
         }
     }
 

@@ -10,6 +10,7 @@ import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
 import moe.rainbowyang.math.number.RealNumber.Math.ln
 import moe.rainbowyang.math.number.RealNumber.Math.sin
 import moe.rainbowyang.math.operation.HyperOperation
+import moe.rainbowyang.math.operation.HyperbolicFunction
 import moe.rainbowyang.math.operation.LogAndExp
 import moe.rainbowyang.math.operation.TrigonometricFunctions
 
@@ -21,6 +22,7 @@ abstract class ComplexNumber :
         Number,
         HyperOperation<ComplexNumber>,
         TrigonometricFunctions<ComplexNumber>,
+        HyperbolicFunction<ComplexNumber>,
         LogAndExp<ComplexNumber> {
 
     companion object {
@@ -62,6 +64,9 @@ abstract class ComplexNumber :
         override fun sin(): ComplexNumber = sin(real).asComplex() * cosI(imag) + sinI(imag) * cos(real).asComplex()
         override fun cos(): ComplexNumber = cos(real).asComplex() * cosI(imag) - sinI(imag) * sin(real).asComplex()
 
+        override fun sinh(): ComplexNumber = (exp() - unaryMinus().exp()) / 2.asComplex()
+        override fun cosh(): ComplexNumber = (exp() + unaryMinus().exp()) / 2.asComplex()
+
         private fun cis(num: RealNumber): ComplexNumber = cos(num) withI sin(num)
         private fun sinI(num: RealNumber): ComplexNumber = RealNumber.ZERO withI (exp(num) - exp(-num)) / 2.asReal()
         private fun cosI(num: RealNumber): ComplexNumber = (exp(num) + exp(-num)) / 2.asReal() withI RealNumber.ZERO
@@ -91,10 +96,13 @@ abstract class ComplexNumber :
         override fun sin(): ComplexNumber = asExp().sin()
         override fun cos(): ComplexNumber = asExp().cos()
 
+        override fun sinh(): ComplexNumber = asExp().sinh()
+        override fun cosh(): ComplexNumber = asExp().cosh()
+
         override fun toString() = "$modulus * exp($argument)"
     }
 
-    object Math : TrigonometricFunctions.Math<ComplexNumber>, LogAndExp.Math<ComplexNumber> {
+    object Math : TrigonometricFunctions.Math<ComplexNumber>, HyperbolicFunction.Math<ComplexNumber>, LogAndExp.Math<ComplexNumber> {
         fun RealNumber.asComplex() = this withI RealNumber.ZERO
         fun kotlin.Number.asComplex() = this.asReal() withI RealNumber.ZERO
     }

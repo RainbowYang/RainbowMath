@@ -7,11 +7,15 @@ import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
 import moe.rainbowyang.math.number.RealNumber.Math.cos
 import moe.rainbowyang.math.number.RealNumber.Math.exp
 import moe.rainbowyang.math.number.RealNumber.Math.asReal
+import moe.rainbowyang.math.number.RealNumber.Math.cosh
 import moe.rainbowyang.math.number.RealNumber.Math.ln
 import moe.rainbowyang.math.number.RealNumber.Math.sin
+import moe.rainbowyang.math.number.RealNumber.Math.sinh
 import moe.rainbowyang.math.number.RealNumber.Math.sumOfSquare
 import moe.rainbowyang.math.operation.HyperOperation
+import moe.rainbowyang.math.operation.HyperbolicFunction
 import moe.rainbowyang.math.operation.LogAndExp
+import moe.rainbowyang.math.operation.TrigonometricFunctions
 import kotlin.math.acos
 
 /**
@@ -21,6 +25,8 @@ import kotlin.math.acos
 data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, val d: RealNumber) :
         Number,
         HyperOperation<Quaternion>,
+        TrigonometricFunctions<Quaternion>,
+        HyperbolicFunction<Quaternion>,
         LogAndExp<Quaternion> {
 
     val modulus = lengthOf(a, b, c, d)
@@ -43,6 +49,18 @@ data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, v
 
     override fun exp(): Quaternion = exp(a).asQuaternion() * (cos(vecter.modulus).asQuaternion() + sgn(vecter) * sin(vecter.modulus).asQuaternion())
     override fun ln(): Quaternion = ln(modulus).asQuaternion() + sgn(vecter) * arg(this).asQuaternion()
+
+    override fun sin() = sin(a).asQuaternion() * cosh(vecter.modulus).asQuaternion() +
+            cos(a).asQuaternion() * sgn(vecter) * sinh(vecter.modulus).asQuaternion()
+
+    override fun cos() = cos(a).asQuaternion() * cosh(vecter.modulus).asQuaternion() -
+            sin(a).asQuaternion() * sgn(vecter) * sinh(vecter.modulus).asQuaternion()
+
+    override fun sinh() = sinh(a).asQuaternion() * cos(vecter.modulus).asQuaternion() +
+            cosh(a).asQuaternion() * sgn(vecter) * sin(vecter.modulus).asQuaternion()
+
+    override fun cosh() = cosh(a).asQuaternion() * cos(vecter.modulus).asQuaternion() -
+            sinh(a).asQuaternion() * sgn(vecter) * sin(vecter.modulus).asQuaternion()
 
     /** 共轭 */
     fun conjugate() = Quaternion(a, -b, -c, -d)

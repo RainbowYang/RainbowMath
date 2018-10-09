@@ -2,6 +2,7 @@ package moe.rainbowyang.math.number
 
 
 import moe.rainbowyang.math.operation.HyperOperation
+import moe.rainbowyang.math.operation.HyperbolicFunction
 import moe.rainbowyang.math.operation.LogAndExp
 import moe.rainbowyang.math.operation.TrigonometricFunctions
 import kotlin.math.*
@@ -15,6 +16,7 @@ class RealNumber(val value: Double) :
         Comparable<RealNumber>,
         HyperOperation<RealNumber>,
         TrigonometricFunctions<RealNumber>,
+        HyperbolicFunction<RealNumber>,
         LogAndExp<RealNumber> {
     constructor(value: kotlin.Number) : this(value.toDouble())
 
@@ -30,6 +32,9 @@ class RealNumber(val value: Double) :
     override fun sin() = RealNumber(sin(value))
     override fun cos() = RealNumber(cos(value))
 
+    override fun sinh() = RealNumber(sinh(value))
+    override fun cosh() = RealNumber(cosh(value))
+
     override fun exp() = RealNumber(exp(value))
     override fun ln() = RealNumber(ln(value))
 
@@ -37,7 +42,7 @@ class RealNumber(val value: Double) :
 
     override fun toString() = value.toString()
 
-    object Math : TrigonometricFunctions.Math<RealNumber>, LogAndExp.Math<RealNumber> {
+    object Math : TrigonometricFunctions.Math<RealNumber>, HyperbolicFunction.Math<RealNumber>, LogAndExp.Math<RealNumber> {
 
         fun kotlin.Number.asReal() = RealNumber(this)
 

@@ -4,27 +4,22 @@ import moe.rainbowyang.math.matrix.Matrix
 import moe.rainbowyang.math.number.Quaternion.Math.arg
 import moe.rainbowyang.math.number.Quaternion.Math.asQuaternion
 import moe.rainbowyang.math.number.Quaternion.Math.sgn
-import moe.rainbowyang.math.number.RealNumber.Math.asReal
-import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
-import moe.rainbowyang.math.number.RealNumber.Math.sumOfSquare
+import moe.rainbowyang.math.number.Real.Math.asReal
+import moe.rainbowyang.math.number.Real.Math.lengthOf
+import moe.rainbowyang.math.number.Real.Math.sumOfSquare
 import moe.rainbowyang.math.operation.*
 import kotlin.math.acos
 
 /**
- *  四元数（a+bi+cj+dk）
+ * 四元数（a+bi+cj+dk）
  * @author Rainbow Yang
  */
-data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, val d: RealNumber) :
-        Number,
-        Addition<Quaternion>,
-        Multiplication<Quaternion>,
-        Exponentiation<Quaternion>,
-        TrigonometricFunctions<Quaternion>,
-        HyperbolicFunction<Quaternion> {
+data class Quaternion(val a: Real, val b: Real, val c: Real, val d: Real) :
+        AbstractNumber<Quaternion> {
 
     val modulus = lengthOf(a, b, c, d)
     val scalar = a
-    val vecter = Quaternion(RealNumber.ZERO, b, c, d)
+    val vecter = Quaternion(Real.ZERO, b, c, d)
 
     fun asMatrix() = Matrix(listOf(a, d, -c, b),
             listOf(-d, a, -b, -c), listOf(c, b, a, -d), listOf(-b, c, d, a))
@@ -62,14 +57,14 @@ data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, v
     fun conjugate() = Quaternion(a, -b, -c, -d)
 
     override fun toString() = "$a" +
-            "${if (b >= RealNumber.ZERO) "+" else ""}${b}i" +
-            "${if (c >= RealNumber.ZERO) "+" else ""}${c}j" +
-            "${if (d >= RealNumber.ZERO) "+" else ""}${d}k"
+            "${if (b >= Real.ZERO) "+" else ""}${b}i" +
+            "${if (c >= Real.ZERO) "+" else ""}${c}j" +
+            "${if (d >= Real.ZERO) "+" else ""}${d}k"
 
     object Math {
-        fun kotlin.Number.asQuaternion() = Quaternion(this.asReal(), RealNumber.ZERO, RealNumber.ZERO, RealNumber.ZERO)
-        fun RealNumber.asQuaternion() = Quaternion(this, RealNumber.ZERO, RealNumber.ZERO, RealNumber.ZERO)
-        fun ComplexNumber.asQuaternion() = Quaternion(real, imag, RealNumber.ZERO, RealNumber.ZERO)
+        fun Number.asQuaternion() = Quaternion(this.asReal(), Real.ZERO, Real.ZERO, Real.ZERO)
+        fun Real.asQuaternion() = Quaternion(this, Real.ZERO, Real.ZERO, Real.ZERO)
+        fun Complex.asQuaternion() = Quaternion(real, imag, Real.ZERO, Real.ZERO)
 
         fun inner(p: Quaternion, q: Quaternion) = q.a * p.a + q.b * p.b + q.c * p.c + q.d * p.d
         fun outer(p: Quaternion, q: Quaternion) = (p.conjugate() * q - q.conjugate() * p) / 2.asQuaternion()

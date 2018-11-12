@@ -9,7 +9,7 @@ import java.util.*
  *
  * @author Rainbow Yang
  */
-data class PointSpherical(val radius: Double, val angles: List<Double>) : Point {
+data class  PointSpherical(val radius: Double, val angles: List<Double>) : Point {
 
     companion object {
         operator fun invoke(cp: Point): PointSpherical {

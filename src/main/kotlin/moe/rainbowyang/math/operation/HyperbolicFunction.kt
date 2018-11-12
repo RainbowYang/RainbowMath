@@ -1,6 +1,6 @@
 package moe.rainbowyang.math.operation
 
-interface HyperbolicFunction<This : HyperOperation2<This>> : Operation<This> {
+interface  HyperbolicFunction<This : HyperOperation2<This>> : Operation<This> {
 
     fun sinh(): This
     fun cosh(): This

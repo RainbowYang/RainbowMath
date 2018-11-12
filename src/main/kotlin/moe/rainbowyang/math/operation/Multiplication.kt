@@ -5,8 +5,8 @@ package moe.rainbowyang.math.operation
  * @author: Rainbow Yang
  * @create: 2018-11-12 11:26
  **/
-interface Multiplication<This> : Operation<This> {
-    operator fun times(other: This): This
-    operator fun div(other: This): This = times(reciprocal())
-    fun reciprocal(): This
+interface Multiplication<T> : Operation<T> {
+    operator fun times(other: T): T
+    operator fun div(other: T): T = times(reciprocal())
+    fun reciprocal(): T
 }

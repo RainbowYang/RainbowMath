@@ -1,10 +1,6 @@
 package moe.rainbowyang.math.number
 
-
-import moe.rainbowyang.math.operation.HyperOperation
-import moe.rainbowyang.math.operation.HyperbolicFunction
-import moe.rainbowyang.math.operation.LogAndExp
-import moe.rainbowyang.math.operation.TrigonometricFunctions
+import moe.rainbowyang.math.operation.*
 import kotlin.math.*
 
 /**
@@ -14,10 +10,11 @@ import kotlin.math.*
 class RealNumber(val value: Double) :
         Number,
         Comparable<RealNumber>,
-        HyperOperation<RealNumber>,
+        Addition<RealNumber>,
+        Multiplication<RealNumber>,
+        Exponentiation<RealNumber>,
         TrigonometricFunctions<RealNumber>,
-        HyperbolicFunction<RealNumber>,
-        LogAndExp<RealNumber> {
+        HyperbolicFunction<RealNumber> {
     constructor(value: kotlin.Number) : this(value.toDouble())
 
     companion object {
@@ -42,8 +39,7 @@ class RealNumber(val value: Double) :
 
     override fun toString() = value.toString()
 
-    object Math : TrigonometricFunctions.Math<RealNumber>, HyperbolicFunction.Math<RealNumber>, LogAndExp.Math<RealNumber> {
-
+    object Math {
         fun kotlin.Number.asReal() = RealNumber(this)
 
         fun sqrt(num: RealNumber) = RealNumber(sqrt(num.value))

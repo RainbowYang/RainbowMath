@@ -1,21 +1,22 @@
 package moe.rainbowyang.math.operation
 
-interface  HyperbolicFunction<This : HyperOperation2<This>> : Operation<This> {
-
-    fun sinh(): This
-    fun cosh(): This
-    fun tanh(): This = sinh() / cosh()
-    fun coth(): This = cosh() / sinh()
-    fun sech(): This = cosh().reciprocal()
-    fun csch(): This = sinh().reciprocal()
-
-    interface Math<This> where This : HyperbolicFunction<This>,
-                               This : HyperOperation2<This> {
-        fun sinh(num: This): This = num.sinh()
-        fun cosh(num: This): This = num.cosh()
-        fun tanh(num: This): This = num.tanh()
-        fun coth(num: This): This = num.coth()
-        fun sech(num: This): This = num.sech()
-        fun csch(num: This): This = num.csch()
-    }
+/**
+ * 抽象双曲三角函数运算
+ * 依赖[Multiplication]
+ * @author Rainbow Yang
+ */
+interface HyperbolicFunction<T : Multiplication<T>> : Operation<T> {
+    fun sinh(): T
+    fun cosh(): T
+    fun tanh(): T = sinh() / cosh()
+    fun coth(): T = cosh() / sinh()
+    fun sech(): T = cosh().reciprocal()
+    fun csch(): T = sinh().reciprocal()
 }
+
+fun <T : HyperbolicFunction<T>> sinh(num: T): T = num.sinh()
+fun <T : HyperbolicFunction<T>> cosh(num: T): T = num.cosh()
+fun <T : HyperbolicFunction<T>> tanh(num: T): T = num.tanh()
+fun <T : HyperbolicFunction<T>> coth(num: T): T = num.coth()
+fun <T : HyperbolicFunction<T>> sech(num: T): T = num.sech()
+fun <T : HyperbolicFunction<T>> csch(num: T): T = num.csch()

@@ -5,8 +5,8 @@ package moe.rainbowyang.math.operation
  * @author: Rainbow Yang
  * @create: 2018-11-12 11:26
  **/
-interface Addition<This> : Operation<This> {
-    operator fun plus(other: This): This
-    operator fun minus(other: This): This = plus(unaryMinus())
-    operator fun unaryMinus(): This
+interface Addition<T> : Operation<T> {
+    operator fun plus(other: T): T
+    operator fun minus(other: T): T = plus(unaryMinus())
+    operator fun unaryMinus(): T
 }

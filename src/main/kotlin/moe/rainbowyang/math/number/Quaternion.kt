@@ -4,19 +4,10 @@ import moe.rainbowyang.math.matrix.Matrix
 import moe.rainbowyang.math.number.Quaternion.Math.arg
 import moe.rainbowyang.math.number.Quaternion.Math.asQuaternion
 import moe.rainbowyang.math.number.Quaternion.Math.sgn
-import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
-import moe.rainbowyang.math.number.RealNumber.Math.cos
-import moe.rainbowyang.math.number.RealNumber.Math.exp
 import moe.rainbowyang.math.number.RealNumber.Math.asReal
-import moe.rainbowyang.math.number.RealNumber.Math.cosh
-import moe.rainbowyang.math.number.RealNumber.Math.ln
-import moe.rainbowyang.math.number.RealNumber.Math.sin
-import moe.rainbowyang.math.number.RealNumber.Math.sinh
+import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
 import moe.rainbowyang.math.number.RealNumber.Math.sumOfSquare
-import moe.rainbowyang.math.operation.HyperOperation
-import moe.rainbowyang.math.operation.HyperbolicFunction
-import moe.rainbowyang.math.operation.LogAndExp
-import moe.rainbowyang.math.operation.TrigonometricFunctions
+import moe.rainbowyang.math.operation.*
 import kotlin.math.acos
 
 /**
@@ -25,10 +16,11 @@ import kotlin.math.acos
  */
 data class Quaternion(val a: RealNumber, val b: RealNumber, val c: RealNumber, val d: RealNumber) :
         Number,
-        HyperOperation<Quaternion>,
+        Addition<Quaternion>,
+        Multiplication<Quaternion>,
+        Exponentiation<Quaternion>,
         TrigonometricFunctions<Quaternion>,
-        HyperbolicFunction<Quaternion>,
-        LogAndExp<Quaternion> {
+        HyperbolicFunction<Quaternion> {
 
     val modulus = lengthOf(a, b, c, d)
     val scalar = a

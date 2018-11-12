@@ -5,15 +5,8 @@ import moe.rainbowyang.math.number.ComplexNumber.Math.asComplex
 import moe.rainbowyang.math.number.ComplexNumber.Normal.Companion.withI
 import moe.rainbowyang.math.number.RealNumber.Math.asReal
 import moe.rainbowyang.math.number.RealNumber.Math.atan2
-import moe.rainbowyang.math.number.RealNumber.Math.cos
-import moe.rainbowyang.math.number.RealNumber.Math.exp
 import moe.rainbowyang.math.number.RealNumber.Math.lengthOf
-import moe.rainbowyang.math.number.RealNumber.Math.ln
-import moe.rainbowyang.math.number.RealNumber.Math.sin
-import moe.rainbowyang.math.operation.HyperOperation
-import moe.rainbowyang.math.operation.HyperbolicFunction
-import moe.rainbowyang.math.operation.LogAndExp
-import moe.rainbowyang.math.operation.TrigonometricFunctions
+import moe.rainbowyang.math.operation.*
 
 /**
  * 复数
@@ -21,10 +14,11 @@ import moe.rainbowyang.math.operation.TrigonometricFunctions
  */
 abstract class ComplexNumber :
         Number,
-        HyperOperation<ComplexNumber>,
+        Addition<ComplexNumber>,
+        Multiplication<ComplexNumber>,
+        Exponentiation<ComplexNumber>,
         TrigonometricFunctions<ComplexNumber>,
-        HyperbolicFunction<ComplexNumber>,
-        LogAndExp<ComplexNumber> {
+        HyperbolicFunction<ComplexNumber> {
 
     companion object {
         val ZERO: ComplexNumber = RealNumber.ZERO withI RealNumber.ZERO
@@ -109,7 +103,7 @@ abstract class ComplexNumber :
         override fun toString() = "$modulus * exp($argument)"
     }
 
-    object Math : TrigonometricFunctions.Math<ComplexNumber>, HyperbolicFunction.Math<ComplexNumber>, LogAndExp.Math<ComplexNumber> {
+    object Math {
         fun RealNumber.asComplex() = this withI RealNumber.ZERO
         fun kotlin.Number.asComplex() = this.asReal() withI RealNumber.ZERO
     }

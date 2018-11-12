@@ -1,12 +1,6 @@
 package moe.rainbowyang.math.number
 
 import moe.rainbowyang.math.matrix.Matrix
-import moe.rainbowyang.math.number.Quaternion.Math.arg
-import moe.rainbowyang.math.number.Quaternion.Math.asQuaternion
-import moe.rainbowyang.math.number.Quaternion.Math.sgn
-import moe.rainbowyang.math.number.Real.Math.asReal
-import moe.rainbowyang.math.number.Real.Math.lengthOf
-import moe.rainbowyang.math.number.Real.Math.sumOfSquare
 import moe.rainbowyang.math.operation.*
 import kotlin.math.acos
 
@@ -61,18 +55,16 @@ data class Quaternion(val a: Real, val b: Real, val c: Real, val d: Real) :
             "${if (c >= Real.ZERO) "+" else ""}${c}j" +
             "${if (d >= Real.ZERO) "+" else ""}${d}k"
 
-    object Math {
-        fun Number.asQuaternion() = Quaternion(this.asReal(), Real.ZERO, Real.ZERO, Real.ZERO)
-        fun Real.asQuaternion() = Quaternion(this, Real.ZERO, Real.ZERO, Real.ZERO)
-        fun Complex.asQuaternion() = Quaternion(real, imag, Real.ZERO, Real.ZERO)
-
-        fun inner(p: Quaternion, q: Quaternion) = q.a * p.a + q.b * p.b + q.c * p.c + q.d * p.d
-        fun outer(p: Quaternion, q: Quaternion) = (p.conjugate() * q - q.conjugate() * p) / 2.asQuaternion()
-        fun even(p: Quaternion, q: Quaternion) = (p * q + q * p) / 2.asQuaternion()
-        fun odd(p: Quaternion, q: Quaternion) = (p * q - q * p) / 2.asQuaternion()
-
-        fun sgn(p: Quaternion) = p / p.modulus.asQuaternion()
-        fun arg(p: Quaternion) = acos((p.a / p.modulus).value)
-
-    }
 }
+
+fun Number.asQuaternion() = Quaternion(this.asReal(), Real.ZERO, Real.ZERO, Real.ZERO)
+fun Real.asQuaternion() = Quaternion(this, Real.ZERO, Real.ZERO, Real.ZERO)
+fun Complex.asQuaternion() = Quaternion(real, imag, Real.ZERO, Real.ZERO)
+
+fun inner(p: Quaternion, q: Quaternion) = q.a * p.a + q.b * p.b + q.c * p.c + q.d * p.d
+fun outer(p: Quaternion, q: Quaternion) = (p.conjugate() * q - q.conjugate() * p) / 2.asQuaternion()
+fun even(p: Quaternion, q: Quaternion) = (p * q + q * p) / 2.asQuaternion()
+fun odd(p: Quaternion, q: Quaternion) = (p * q - q * p) / 2.asQuaternion()
+
+fun sgn(p: Quaternion) = p / p.modulus.asQuaternion()
+fun arg(p: Quaternion) = acos((p.a / p.modulus).value)

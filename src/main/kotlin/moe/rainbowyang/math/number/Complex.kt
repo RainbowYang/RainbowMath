@@ -1,12 +1,11 @@
 package moe.rainbowyang.math.number
 
 import moe.rainbowyang.math.matrix.Matrix
-import moe.rainbowyang.math.number.Complex.Math.asComplex
 import moe.rainbowyang.math.number.Complex.Normal.Companion.withI
-import moe.rainbowyang.math.number.Real.Math.asReal
-import moe.rainbowyang.math.number.Real.Math.atan2
-import moe.rainbowyang.math.number.Real.Math.lengthOf
-import moe.rainbowyang.math.operation.*
+import moe.rainbowyang.math.operation.cos
+import moe.rainbowyang.math.operation.exp
+import moe.rainbowyang.math.operation.ln
+import moe.rainbowyang.math.operation.sin
 
 /**
  * 复数
@@ -96,9 +95,7 @@ abstract class Complex : AbstractNumber<Complex> {
 
         override fun toString() = "$modulus * exp($argument)"
     }
-
-    object Math {
-        fun Real.asComplex() = this withI Real.ZERO
-        fun Number.asComplex() = this.asReal() withI Real.ZERO
-    }
 }
+
+fun Real.asComplex() = this withI Real.ZERO
+fun Number.asComplex() = this.asReal() withI Real.ZERO

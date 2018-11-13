@@ -25,6 +25,12 @@ Number should implement some interface in Abstract Operation.
 ### Matrix
 - [x] Matrix
 
+### Function
+- [x] UnaryFunction
+- [x] BinaryFunction
+- [x] TernaryFunction
+- [x] MultiFunction
+
 ### Coordinate System
 ### p-adic number
 ### ...

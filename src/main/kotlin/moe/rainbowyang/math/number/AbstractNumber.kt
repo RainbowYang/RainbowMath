@@ -13,7 +13,7 @@ interface AbstractNumber<T> :
         Addition<T>,
         Multiplication<T>,
         Exponentiation<T>,
-        TrigonometricFunctions<T>,
+        TrigonometricFunction<T>,
         HyperbolicFunction<T>
 
         where T : Multiplication<T>,

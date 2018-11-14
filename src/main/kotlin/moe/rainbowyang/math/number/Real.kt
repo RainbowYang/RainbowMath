@@ -1,6 +1,5 @@
 package moe.rainbowyang.math.number
 
-import moe.rainbowyang.math.number.Real.Companion.ZERO
 import kotlin.math.*
 
 /**
@@ -8,6 +7,7 @@ import kotlin.math.*
  * @author Rainbow Yang
  */
 class Real(val value: Double) : AbstractNumber<Real>, Comparable<Real> {
+
     constructor(value: Number) : this(value.toDouble())
 
     companion object {
@@ -33,17 +33,3 @@ class Real(val value: Double) : AbstractNumber<Real>, Comparable<Real> {
     override fun toString() = value.toString()
 
 }
-
-fun Number.asReal() = Real(this)
-
-fun sqrt(num: Real) = Real(sqrt(num.value))
-
-fun atan2(y: Real, x: Real) = Real(atan2(y.value, x.value))
-
-fun lengthOf(vararg nums: Real) = nums.asList().lengthOf()
-fun List<Real>.lengthOf() = sqrt(sumOfSquare())
-fun sumOfSquare(vararg nums: Real) = nums.asList().sumOfSquare()
-fun List<Real>.sumOfSquare() =
-        fold(ZERO) { sum, next -> sum + next * next }
-
-

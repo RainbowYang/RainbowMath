@@ -25,4 +25,5 @@ class TernaryFunction<T>(val function: (T, T, T) -> T) :
 
     override fun reciprocal(): TernaryFunction<T> =
             TernaryFunction { i1, i2, i3 -> this(i1, i2, i3).reciprocal() }
+
 }

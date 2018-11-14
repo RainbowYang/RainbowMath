@@ -5,6 +5,7 @@ package moe.rainbowyang.math.point
  * @author Rainbow Yang
  */
 data class Point2D(val x: Double, val y: Double) : Point {
+    
     constructor(x: Number, y: Number) : this(x.toDouble(), y.toDouble())
     constructor(point: PointAxes) : this(point[0], point[1])
 

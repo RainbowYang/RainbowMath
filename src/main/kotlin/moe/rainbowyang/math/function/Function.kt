@@ -5,6 +5,4 @@ package moe.rainbowyang.math.function
  * @author: Rainbow Yang
  * @create: 2018-11-13 17:51
  **/
-interface Function {
-
-}
+interface Function

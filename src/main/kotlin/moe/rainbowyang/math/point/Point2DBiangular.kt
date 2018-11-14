@@ -7,7 +7,9 @@ import moe.rainbowyang.math.line.Line
  * @author Rainbow Yang
  */
 data class Point2DBiangular(val angle1: Double, val angle2: Double, val a: Double) : Point {
-
-    override val asAxes by lazy { (Line(Point2D(a, 0), angle1) crossTo Line(Point2D(-a, 0), angle2)).asAxes }
-
+    
+    override val asAxes by lazy {
+        (Line(Point2D(a, 0), angle1) crossTo Line(Point2D(-a, 0), angle2)).asAxes
+    }
+    
 }

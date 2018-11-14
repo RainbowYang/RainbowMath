@@ -20,3 +20,5 @@ fun until(end: Int) = 0 until end
 infix fun Number.almostEquals(other: Number) = this.almostEquals(other, 10)
 fun Number.almostEquals(other: Number, accuracy: Int) =
         abs(this - other) < (0.1.pow(accuracy.toDouble()))
+
+fun toBeImplemented(): Nothing = throw NotImplementedError()

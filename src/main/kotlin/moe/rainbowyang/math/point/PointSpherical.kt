@@ -52,5 +52,4 @@ data class  PointSpherical(val radius: Double, val angles: List<Double>) : Point
         return "PointSpherical(radius=$radius, angles=${Arrays.toString(angles.toDoubleArray())})"
     }
 
-
 }

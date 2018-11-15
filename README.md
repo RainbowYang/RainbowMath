@@ -31,6 +31,14 @@ Number should implement some interface in Abstract Operation.
 - [x] TernaryFunction
 - [x] MultiFunction
 
+### Graphics
+- [x] Point2D
+- [x] Point2DPolar
+- [x] Point3D
+- [x] Point3DSpherical
+- [x] PointAxes
+- [x] PointSpherical
+
 ### Coordinate System
 ### p-adic number
 ### ...

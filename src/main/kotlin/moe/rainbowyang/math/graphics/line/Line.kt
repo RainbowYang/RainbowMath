@@ -1,24 +1,25 @@
-package moe.rainbowyang.math.line
+package moe.rainbowyang.math.graphics.line
 
 import moe.rainbowyang.math.almostEquals
-import moe.rainbowyang.math.point.Point2D
+import moe.rainbowyang.math.graphics.point.Point2D
+import moe.rainbowyang.math.number.Real
+import moe.rainbowyang.math.number.toReal
 import kotlin.math.atan
 
 /**
  * 数学意义上的线
  * 提供求交点等功能
  * 表达式为ax+by+c=0
- *
  * @author Rainbow Yang
  */
-class Line(val a: Double, val b: Double, val c: Double) {
+class Line(val a: Real, val b: Real, val c: Real) {
     
     /** 斜率 */
     val slope = -a / b
     /** 倾斜角 */
-    val angle = atan(slope)
+    val angle = atan(slope.value).toReal()
     
-    constructor(a: Number, b: Number, c: Number) : this(a.toDouble(), b.toDouble(), c.toDouble())
+    constructor(a: Number, b: Number, c: Number) : this(a.toReal(), b.toReal(), c.toReal())
     
     companion object {
         /**
@@ -36,14 +37,15 @@ class Line(val a: Double, val b: Double, val c: Double) {
          */
         operator fun invoke(point: Point2D, angle: Double) =
                 if ((angle - Math.PI / 2) % Math.PI almostEquals 0.0) {
-                    Line(1, 0, -point.x)
+                    Line(1, 0, -point.x.value)
                 } else {
                     val a = Math.tan(angle)
-                    Line(a, -1, point.y * (1 - a))
+                    Line(a, -1, point.y.value * (1 - a))
                 }
         
         val X_AXIS = Line(0.0, 1.0, 0.0)
         val Y_AXIS = Line(1.0, 0.0, 0.0)
+        operator fun invoke(point: Point2D, angle: Real) = invoke(point, angle.value)
     }
     
     /**
@@ -52,7 +54,8 @@ class Line(val a: Double, val b: Double, val c: Double) {
      */
     infix fun crossTo(other: Line): Point2D {
         //平行
-        if (a * other.b - b * other.a == 0.0) throw NoCrossException("$this has no cross with $other")
+        if (a * other.b - b * other.a == Real.ZERO)
+            throw NoCrossException("$this has no cross with $other")
         
         return Point2D(-(c * other.b - b * other.c) / (a * other.b - b * other.a),
                 -(a * other.c - c * other.a) / (a * other.b - b * other.a))

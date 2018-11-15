@@ -1,22 +1,25 @@
-package moe.rainbowyang.math.point
+package moe.rainbowyang.math.graphics.point
 
-import moe.rainbowyang.math.checkValues
-import moe.rainbowyang.math.lengthOf
+import moe.rainbowyang.math.number.*
 import moe.rainbowyang.math.until
 import java.util.*
 import kotlin.math.max
 
+
 /**
  * 任意纬度的坐标轴点
- *
  * @author Rainbow Yang
  */
-class PointAxes(val values: List<Double>) : Point {
+class PointAxes(val values: List<Real>) : Point() {
     
-    constructor(vararg values: Number) : this(List(values.size) { values[it].toDouble() })
+    constructor(vararg values: Real) : this(List(values.size) { values[it] })
     
-    //生成size维的值均为value的点
-    constructor(value: Double, size: Int) : this(List(size) { value })
+    /**
+     * 生成size维的值均为value的点
+     */
+    constructor(value: Real, size: Int) : this(List(size) { value })
+    
+    constructor(value: Number, size: Int) : this(List(size) { value.toReal() })
     
     /**
      * 维度数
@@ -27,33 +30,32 @@ class PointAxes(val values: List<Double>) : Point {
     operator fun component2() = values[1]
     operator fun component3() = values[2]
     operator fun component4() = values[3]
-    operator fun component5() = values[4]
     
-    operator fun get(index: Int) = values.getOrElse(index) { 0.0 } //维度不够时补0
+    operator fun get(index: Int) = values.getOrElse(index) { Real.ZERO } //维度不够时补0
     
-    override val asAxes get() = this
+    override val asAxes = this
     
-    override val available get() = values.checkValues()
-    override val length get() = values.lengthOf()
+    override val available = values.checkValues()
+    override val length = values.lengthOf()
     
     override fun plus(other: Point): Point {
         val paOther = other.asAxes
         return PointAxes(List(max(size, paOther.size)) { this[it] + paOther[it] })
     }
     
-    override operator fun times(times: Double) = PointAxes(List(size) { get(it) * times })
+    override operator fun times(times: Real) = PointAxes(List(size) { get(it) * times })
     
     
-    fun plusAt(index: Int, plus: Number): PointAxes =
-            PointAxes(createNewListWithOldData(index).apply { this[index] += plus.toDouble() })
+    fun plusAt(index: Int, plus: Real): PointAxes =
+            PointAxes(createNewListWithOldData(index).apply { this[index] += plus })
     
     fun setAtAndNew(index: Int, value: Number): PointAxes =
-            PointAxes(createNewListWithOldData(index).apply { this[index] = value.toDouble() })
+            PointAxes(createNewListWithOldData(index).apply { this[index] = value.toReal() })
     
     fun timesAtAndNew(index: Int, times: Number): PointAxes =
-            PointAxes(createNewListWithOldData(index).apply { this[index] *= times.toDouble() })
+            PointAxes(createNewListWithOldData(index).apply { this[index] *= times.toReal() })
     
-    fun spinAtAndNew(firstIndex: Int, secondIndex: Int, angle: Number): PointAxes {
+    fun spinAtAndNew(firstIndex: Int, secondIndex: Int, angle: Real): PointAxes {
         val newValues = createNewListWithOldData(firstIndex, secondIndex)
         val (x, y) = Point2D(this[firstIndex], this[secondIndex]).asPoint2DPolar.spin(angle).asAxes
         newValues[firstIndex] = x
@@ -67,7 +69,7 @@ class PointAxes(val values: List<Double>) : Point {
     
     private fun createNewListWithOldData(index: Int) = MutableList(max(index + 1, size)) { get(it) }
     
-    override fun toString() = "PointForAxes(${Arrays.toString(values.toDoubleArray())})"
+    override fun toString() = "PointForAxes(${Arrays.toString(values.toTypedArray())})"
     
     
     override fun equals(other: Any?): Boolean {
@@ -85,7 +87,7 @@ class PointAxes(val values: List<Double>) : Point {
     }
     
     override fun hashCode(): Int {
-        return Arrays.hashCode(values.toDoubleArray())
+        return Arrays.hashCode(values.toTypedArray())
     }
     
 }

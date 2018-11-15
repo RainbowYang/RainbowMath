@@ -1,7 +1,7 @@
 package moe.rainbowyang.math.matrix
 
 import moe.rainbowyang.math.number.Real
-import moe.rainbowyang.math.number.asReal
+import moe.rainbowyang.math.number.toReal
 import moe.rainbowyang.math.operation.Addition
 import moe.rainbowyang.math.operation.Multiplication
 
@@ -13,7 +13,8 @@ import moe.rainbowyang.math.operation.Multiplication
 class Matrix(val values: List<List<Real>>) : Addition<Matrix>, Multiplication<Matrix> {
     
     constructor(vararg values: List<Real>) : this(values.asList())
-    constructor(row: Int, column: Int, maker: (Int, Int) -> Real) : this(List(row) { r -> List(column) { c -> maker(r, c) } })
+    constructor(row: Int, column: Int, maker: (Int, Int) -> Real) :
+            this(List(row) { r -> List(column) { c -> maker(r, c) } })
     
     val row = values.size
     val column = values.first().size
@@ -36,7 +37,7 @@ class Matrix(val values: List<List<Real>>) : Addition<Matrix>, Multiplication<Ma
     override operator fun times(other: Matrix): Matrix {
         check(column == other.row) { "times is not allowed here" }
         return Matrix(row, other.column) { r, c ->
-            List(column) { this[r][it].value * other[it][c].value }.sum().asReal()
+            List(column) { this[r][it].value * other[it][c].value }.sum().toReal()
         }
     }
     

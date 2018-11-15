@@ -7,11 +7,16 @@ import moe.rainbowyang.math.operation.*
  * 四元数（a+bi+cj+dk）
  * @author Rainbow Yang
  */
-data class Quaternion(val a: Real, val b: Real, val c: Real, val d: Real) : AbstractNumber<Quaternion> {
+data class Quaternion(val a: Real = Real.ZERO,
+                      val b: Real = Real.ZERO,
+                      val c: Real = Real.ZERO,
+                      val d: Real = Real.ZERO) : AbstractNumber<Quaternion> {
+    
+    constructor(a: Number) : this(a.toReal())
     
     val modulus = lengthOf(a, b, c, d)
     val scalar = a
-    val vecter = Quaternion(Real.ZERO, b, c, d)
+    val vecter get() = Quaternion(Real.ZERO, b, c, d)
     
     fun asMatrix() =
             Matrix(listOf(a, d, -c, b), listOf(-d, a, -b, -c), listOf(c, b, a, -d), listOf(-b, c, d, a))
@@ -28,30 +33,30 @@ data class Quaternion(val a: Real, val b: Real, val c: Real, val d: Real) : Abst
                 c * t + a * y + b * z - d * x, d * t + z * a + c * x - b * y)
     }
     
-    override fun reciprocal() = this.conjugate() / sumOfSquare(a, b, c, d).asQuaternion()
+    override fun reciprocal() = this.conjugate() / sumOfSquare(a, b, c, d).toQuaternion()
     
     override fun exp(): Quaternion =
-            exp(a).asQuaternion() * (cos(vecter.modulus).asQuaternion()
-                    + sgn(vecter) * sin(vecter.modulus).asQuaternion())
+            exp(a).toQuaternion() * (cos(vecter.modulus).toQuaternion()
+                    + sgn(vecter) * sin(vecter.modulus).toQuaternion())
     
     override fun ln(): Quaternion =
-            ln(modulus).asQuaternion() + sgn(vecter) * arg(this).asQuaternion()
+            ln(modulus).toQuaternion() + sgn(vecter) * arg(this).toQuaternion()
     
     override fun sin() =
-            sin(a).asQuaternion() * cosh(vecter.modulus).asQuaternion() +
-                    cos(a).asQuaternion() * sgn(vecter) * sinh(vecter.modulus).asQuaternion()
+            sin(a).toQuaternion() * cosh(vecter.modulus).toQuaternion() +
+                    cos(a).toQuaternion() * sgn(vecter) * sinh(vecter.modulus).toQuaternion()
     
     override fun cos() =
-            cos(a).asQuaternion() * cosh(vecter.modulus).asQuaternion() -
-                    sin(a).asQuaternion() * sgn(vecter) * sinh(vecter.modulus).asQuaternion()
+            cos(a).toQuaternion() * cosh(vecter.modulus).toQuaternion() -
+                    sin(a).toQuaternion() * sgn(vecter) * sinh(vecter.modulus).toQuaternion()
     
     override fun sinh() =
-            sinh(a).asQuaternion() * cos(vecter.modulus).asQuaternion() +
-                    cosh(a).asQuaternion() * sgn(vecter) * sin(vecter.modulus).asQuaternion()
+            sinh(a).toQuaternion() * cos(vecter.modulus).toQuaternion() +
+                    cosh(a).toQuaternion() * sgn(vecter) * sin(vecter.modulus).toQuaternion()
     
     override fun cosh() =
-            cosh(a).asQuaternion() * cos(vecter.modulus).asQuaternion() -
-                    sinh(a).asQuaternion() * sgn(vecter) * sin(vecter.modulus).asQuaternion()
+            cosh(a).toQuaternion() * cos(vecter.modulus).toQuaternion() -
+                    sinh(a).toQuaternion() * sgn(vecter) * sin(vecter.modulus).toQuaternion()
     
     /** 共轭 */
     fun conjugate() = Quaternion(a, -b, -c, -d)

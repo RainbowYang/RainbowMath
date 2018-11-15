@@ -9,7 +9,7 @@ import moe.rainbowyang.math.toBeImplemented
  */
 interface AbstractNumber<T> :
         Addition<T>, Multiplication<T>, Exponentiation<T>, TrigonometricFunction<T>, HyperbolicFunction<T>
-        where T : Multiplication<T>, T : Exponentiation<T> {
+        where T : Addition<T>, T : Multiplication<T>, T : Exponentiation<T> {
     
     override fun plus(other: T): T = toBeImplemented()
     override fun unaryMinus(): T = toBeImplemented()

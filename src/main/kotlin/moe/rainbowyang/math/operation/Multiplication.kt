@@ -5,10 +5,10 @@ package moe.rainbowyang.math.operation
  * @author: Rainbow Yang
  * @create: 2018-11-12 11:26
  **/
-interface Multiplication<T> : Operation<T> {
+interface Multiplication<T : Multiplication<T>> : Operation<T> {
     
     operator fun times(other: T): T
-    operator fun div(other: T): T = times(reciprocal())
+    operator fun div(other: T): T = times(other.reciprocal())
     fun reciprocal(): T
     
 }
